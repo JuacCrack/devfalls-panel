@@ -1,0 +1,7 @@
+[build]
+command = "npm run build"
+publish = ""  # ¡No pongas .next!
+functions = "netlify/funciones"
+
+[plugins]
+package = "@netlify/plugin-nextjs"
