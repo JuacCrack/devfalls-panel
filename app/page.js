@@ -25,7 +25,7 @@ export default function Home() {
 //   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
 //   useEffect(() => {
-//     fetch("${process.env.URL_API}/api/abm/tables/list", {
+//     fetch("${process.env.NEXT_PUBLIC_URL_API}/api/abm/tables/list", {
 //       method: "POST",
 //       headers: {
 //         "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export default function Home() {
 //     setLoading(true);
 //     setSelectedTable(tableName);
 
-//     fetch(`${process.env.URL_API}/api/abm/${tableName}/list`, {
+//     fetch(`${process.env.NEXT_PUBLIC_URL_API}/api/abm/${tableName}/list`, {
 //       method: "POST",
 //       headers: {
 //         "Content-Type": "application/json",
@@ -451,7 +451,7 @@ export default function Home() {
 //       setLoading(true);
 
 //       const res = await fetch(
-//         `${process.env.URL_API}/api/abm/${selectedTable}/${method}${
+//         `${process.env.NEXT_PUBLIC_URL_API}/api/abm/${selectedTable}/${method}${
 //           where ? `/${where}` : ""
 //         }`,
 //         {
@@ -477,7 +477,7 @@ export default function Home() {
 //   const getStructure = async (table) => {
 //     try {
 //       const res = await fetch(
-//         `${process.env.URL_API}/api/abm/${table}/structure`,
+//         `${process.env.NEXT_PUBLIC_URL_API}/api/abm/${table}/structure`,
 //         {
 //           method: "POST",
 //           headers: { "Content-Type": "application/json" },

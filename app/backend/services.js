@@ -1,6 +1,6 @@
 const fetchTableData = async (tableName) => {
   try {
-    const res = await fetch(`${process.env.URL_API}/api/abm/${tableName}/list`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/api/abm/${tableName}/list`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,7 +19,7 @@ const fetchSubmit = async (dataForm, method, where = false, selectedTable) => {
   try {
     console.log(dataForm, method, where, selectedTable);
     const res = await fetch(
-      `${process.env.URL_API}/api/abm/${selectedTable}/${method}${
+      `${process.env.NEXT_PUBLIC_URL_API}/api/abm/${selectedTable}/${method}${
         where ? `/${where}` : ""
       }`,
       {
@@ -39,7 +39,7 @@ const fetchSubmit = async (dataForm, method, where = false, selectedTable) => {
 const fetchStructure = async (table) => {
   try {
     const res = await fetch(
-      `${process.env.URL_API}/api/abm/${table}/structure`,
+      `${process.env.NEXT_PUBLIC_URL_API}/api/abm/${table}/structure`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -75,7 +75,7 @@ const fetchWhere = async (row, selectedTable) => {
 
 const fetchTableNames = async () => {
   try {
-    const res = await fetch("${process.env.URL_API}/api/abm/tables/list", {
+    const res = await fetch("${process.env.NEXT_PUBLIC_URL_API}/api/abm/tables/list", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
