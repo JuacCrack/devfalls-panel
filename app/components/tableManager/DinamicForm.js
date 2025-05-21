@@ -181,12 +181,50 @@ const createInputs = (structure, row = false) => {
     label.className = "text-sm font-medium text-gray-700 text-left";
 
     let value = row
-      ? Object.entries(row).find(
-          ([clave]) => clave === e.columnName
-        )?.[1] ?? false
+      ? Object.entries(row).find(([clave]) => clave === e.columnName)?.[1] ??
+        false
       : false;
 
     let input;
+
+    if (e.isForeignKey && e.foreignKey?.rows?.length > 0) {
+      input = document.createElement("select");
+      input.name = e.columnName;
+      input.id = e.columnName;
+      input.className = `
+    px-3 py-2 border rounded-md border-gray-300 focus:outline-none 
+    focus:ring-2 focus:ring-blue-500 focus:border-transparent 
+    transition-all duration-300 ease-in-out bg-white text-sm
+  `;
+
+      const opt = document.createElement("option");
+      opt.value = null;
+      opt.textContent = "Seleccioná una opción";
+      opt.selected = value === null;
+      input.appendChild(opt);
+
+      e.foreignKey.rows.forEach(({ pk, col2 }) => {
+        const opt = document.createElement("option");
+        opt.value = pk;
+        opt.textContent = col2;
+        if (value == pk) opt.selected = true;
+        input.appendChild(opt);
+      });
+
+      const wrapper = document.createElement("div");
+      wrapper.className =
+        "flex flex-col gap-1 transition-all duration-300 ease-in-out";
+
+      const label = document.createElement("label");
+      label.textContent = beautifyName(e.columnName);
+      label.htmlFor = e.columnName;
+      label.className = "text-sm font-medium text-gray-700 text-left";
+
+      wrapper.appendChild(label);
+      wrapper.appendChild(input);
+      inputs.push(wrapper);
+      return; // Salteamos el resto del loop para esta columna
+    }
 
     switch (e.dataType) {
       case "varchar":
@@ -301,7 +339,6 @@ const DynamicForm = ({
   setIsOpenModal,
 }) => {
   useEffect(() => {
-
     const openForm = async () => {
       try {
         setIsOpenModal(true);
@@ -312,9 +349,7 @@ const DynamicForm = ({
         const title = beautifyName(selectedTable);
 
         const h3 = document.createElement("h3");
-        h3.innerText = `${
-          row ? "Editar" : "Crear nuevo"
-        } registro (${title})`;
+        h3.innerText = `${row ? "Editar" : "Crear nuevo"} registro (${title})`;
         h3.className = "text-lg font-semibold mb-4 col-span-full";
 
         form.appendChild(h3);
@@ -328,9 +363,7 @@ const DynamicForm = ({
         const inputs = createInputs(structure, row);
         inputs.forEach((inputWrapper) => form.appendChild(inputWrapper));
 
-        const whereData = row
-          ? await fetchWhere(row, selectedTable)
-          : false;
+        const whereData = row ? await fetchWhere(row, selectedTable) : false;
 
         MySwal.fire({
           html: form,
