@@ -1,6 +1,9 @@
 const fetchTableData = async (tableName) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/api/abm/${tableName}/list`, {
+    const baseUrl = process.env.NEXT_PUBLIC_URL_API;
+    const url = `${baseUrl}/api/abm/${tableName}/list`;
+
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,16 +21,15 @@ const fetchTableData = async (tableName) => {
 const fetchSubmit = async (dataForm, method, where = false, selectedTable) => {
   try {
     console.log(dataForm, method, where, selectedTable);
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL_API}/api/abm/${selectedTable}/${method}${
-        where ? `/${where}` : ""
-      }`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dataForm),
-      }
-    );
+    const baseUrl = process.env.NEXT_PUBLIC_URL_API;
+    const url = `${baseUrl}/api/abm/${selectedTable}/${method}${
+      where ? `/${where}` : ""
+    }`;
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dataForm),
+    });
     const data = await res.json();
     return data.success ? true : false;
   } catch (error) {
@@ -38,14 +40,13 @@ const fetchSubmit = async (dataForm, method, where = false, selectedTable) => {
 
 const fetchStructure = async (table) => {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL_API}/api/abm/${table}/structure`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
-      }
-    );
+    const baseUrl = process.env.NEXT_PUBLIC_URL_API;
+    const url = `${baseUrl}/api/abm/${table}/structure`;
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    });
     const data = await res.json();
     return data.success ? data.data : false;
   } catch (error) {
@@ -75,7 +76,9 @@ const fetchWhere = async (row, selectedTable) => {
 
 const fetchTableNames = async () => {
   try {
-    const res = await fetch("${process.env.NEXT_PUBLIC_URL_API}/api/abm/tables/list", {
+    const baseUrl = process.env.NEXT_PUBLIC_URL_API;
+    const url = `${baseUrl}/api/abm/tables/list`;
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
