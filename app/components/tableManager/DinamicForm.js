@@ -196,6 +196,7 @@ const createInputs = (structure, row = false) => {
     focus:ring-2 focus:ring-blue-500 focus:border-transparent 
     transition-all duration-300 ease-in-out bg-white text-sm
   `;
+  
 
       const opt = document.createElement("option");
       opt.value = null;
